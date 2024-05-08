@@ -1,0 +1,27 @@
+{
+	"name": "backend-novabase",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"compile": "tsup src",
+		"start": "tsx src/server.ts",
+		"dev": "node --env-file=.env.development --import=tsx --watch ./src/server.ts",
+		"dev:nowatch": "node --env-file=.env.development --import=tsx ./src/server.ts",
+		"dev:bun": "bun run --env-file=.env.development --watch src/server.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^20.12.10",
+		"tsup": "^8.0.2",
+		"tsx": "^4.9.3",
+		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"@fastify/cors": "^9.0.1",
+		"@sinclair/typebox": "^0.32.29",
+		"ansicolor": "^2.0.3",
+		"dotenv": "^16.4.5",
+		"fastify": "^4.27.0",
+		"mongoose": "^8.3.4"
+	}
+}

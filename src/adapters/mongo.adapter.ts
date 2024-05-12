@@ -7,9 +7,10 @@ class MongoAdapter {
 
 	constructor(connectionUrl: string) {
 		this.connectionUrl = connectionUrl;
+		this.forceConnect();
 	}
 
-	public async forceConnect() {
+	private async forceConnect() {
 		await mongoose.connect(this.connectionUrl).then(this.connected).catch(this.error);
 	}
 

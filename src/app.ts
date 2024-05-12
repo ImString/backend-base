@@ -12,11 +12,6 @@ class App {
 	constructor(appInit: { plugins: any; routes: any }) {
 		this.app = fastify({ logger: true });
 		this.mongoDb = new MongoAdapter(this.databaseUrl);
-		this.connectDatabase();
-	}
-
-	private async connectDatabase() {
-		await this.mongoDb.forceConnect();
 	}
 
 	public listen() {

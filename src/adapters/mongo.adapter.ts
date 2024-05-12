@@ -1,28 +1,32 @@
 import ansicolor from 'ansicolor';
 import terminalHelper from '@/helper/terminal.helper';
-import { connect, connection, Connection } from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
 
 class MongoAdapter {
-	private _database: Connection;
+	private connectionUrl: string;
 
 	constructor(connectionUrl: string) {
-		connect(connectionUrl);
-		this._database = connection;
-		this._database.on('open', this.connected);
-		this._database.on('error', this.error);
-		terminalHelper.success('MONGOOSE', 'Start load mongoose');
+		this.connectionUrl = connectionUrl;
+	}
+
+	public async forceConnect() {
+		await mongoose.connect(this.connectionUrl).then(this.connected).catch(this.error);
 	}
 
 	private connected() {
 		terminalHelper.success('MONGOOSE', [
-			'Successfully connected:'
-			// ansicolor.cyan(this._database.db.databaseName)
+			'Successfully connected:',
+			ansicolor.cyan(mongoose.connection.db.databaseName)
 		]);
 	}
 
 	private error(error: Error) {
 		terminalHelper.error('MONGOOSE', [`Connection Failed.`, error.message]);
 		throw error;
+	}
+
+	public database(): Connection {
+		return mongoose.connection;
 	}
 }
 
